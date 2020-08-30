@@ -49,7 +49,7 @@ public class EmpWageBuilder implements IComputeEmpWage {
 
 
         public static void main(String[] args) {
-                EmpWageBuilder empWageBuilder = new EmpWageBuilder();
+                IComputeEmpWage empWageBuilder = new EmpWageBuilder();
 		empWageBuilder.addCompanyEmpWage("Infosys", 20, 20, 100);
                 empWageBuilder.addCompanyEmpWage("Wipro", 10, 10, 50);
 		empWageBuilder.computeEmpWage();

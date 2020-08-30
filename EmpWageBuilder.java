@@ -5,9 +5,11 @@ public class EmpWageBuilder implements IComputeEmpWage {
 
 	private int numOfCompany = 0;
 	private LinkedList<CompanyEmpWage> companyEmpWageList;
+	private Map<String,CompanyEmpWage> companyToEmpWageMap;
 
 	public EmpWageBuilder() {
 		companyEmpWageList = new LinkedList<>();
+		companyToEmpWageMap = new HashMap<>();
 	}
 
 	public void addCompanyEmpWage(String company, int empRatePerHour,
@@ -15,6 +17,7 @@ public class EmpWageBuilder implements IComputeEmpWage {
 		CompanyEmpWage companyEmpWage = new CompanyEmpWage(company, empRatePerHour,
 									 numOfWorkingDays, maxHoursPerMonth);
 		companyEmpWageList.add(companyEmpWage);
+		companyToEmpWageMap.put(company, companyEmpWage);
 	}
 
 	public void computeEmpWage() {
@@ -23,6 +26,11 @@ public class EmpWageBuilder implements IComputeEmpWage {
 			companyEmpWage.setTotalEmpWage(this.computeEmpWage(companyEmpWage));
 			System.out.println(companyEmpWage);
 		}
+	}
+
+	@Override
+	public int getTotalWage(String company) {
+		return companyToEmpWageMap.get(company).totalEmpWage;
 	}
 
 	public int computeEmpWage(CompanyEmpWage companyEmpWage) {
@@ -55,5 +63,6 @@ public class EmpWageBuilder implements IComputeEmpWage {
 		empWageBuilder.addCompanyEmpWage("Infosys", 20, 20, 100);
                 empWageBuilder.addCompanyEmpWage("Wipro", 10, 10, 50);
 		empWageBuilder.computeEmpWage();
+		System.out.println("Total Wage for Infosys Company: "+empWageBuilder.getTotalWage("Infosys"));
         }
 }

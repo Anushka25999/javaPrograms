@@ -1,25 +1,27 @@
+import java.util.*;
 public class EmpWageBuilder implements IComputeEmpWage {
         public static final int IS_PART_TIME = 1;
         public static final int IS_FULL_TIME = 2;
 
 	private int numOfCompany = 0;
-	private CompanyEmpWage[] companyEmpWageArray;
+	private LinkedList<CompanyEmpWage> companyEmpWageList;
 
 	public EmpWageBuilder() {
-		companyEmpWageArray = new CompanyEmpWage[5];
+		companyEmpWageList = new LinkedList<>();
 	}
 
 	public void addCompanyEmpWage(String company, int empRatePerHour,
 				     int numOfWorkingDays, int maxHoursPerMonth){
-		companyEmpWageArray[numOfCompany] = new CompanyEmpWage(company, empRatePerHour,
+		CompanyEmpWage companyEmpWage = new CompanyEmpWage(company, empRatePerHour,
 									 numOfWorkingDays, maxHoursPerMonth);
-		numOfCompany++;
+		companyEmpWageList.add(companyEmpWage);
 	}
 
 	public void computeEmpWage() {
-		for(int i = 0; i<numOfCompany; i++) {
-			companyEmpWageArray[i].setTotalEmpWage(this.computeEmpWage(companyEmpWageArray[i]));
-			System.out.println(companyEmpWageArray[i]);
+		for(int i = 0; i<companyEmpWageList.size(); i++) {
+			CompanyEmpWage companyEmpWage = companyEmpWageList.get(i);
+			companyEmpWage.setTotalEmpWage(this.computeEmpWage(companyEmpWage));
+			System.out.println(companyEmpWage);
 		}
 	}
 
